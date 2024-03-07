@@ -1,10 +1,10 @@
 const geHelloWorldResponse = async () => {
   const res = await fetch("http://localhost:8080/hello");
-  return res.text();
+  return await res.text();
 };
 
 export default async function Home() {
-  const data = geHelloWorldResponse();
+  const data = await geHelloWorldResponse();
 
   return <div>{data}</div>;
 }

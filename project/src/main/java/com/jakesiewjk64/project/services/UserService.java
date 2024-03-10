@@ -1,5 +1,7 @@
 package com.jakesiewjk64.project.services;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,12 +11,15 @@ import com.jakesiewjk64.project.models.User;
 import com.jakesiewjk64.project.repositories.IUserRepository;
 import com.jakesiewjk64.project.utils.UserSpecification;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UserService {
   private final IUserRepository userRepository;
 
-  public UserService(IUserRepository userRepository) {
-    this.userRepository = userRepository;
+  public Optional<User> findUserByEmail(String email) {
+    return userRepository.findUserByEmail(email);
   }
 
   public Page<User> findAll(String email, Pageable pageable) {

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.jakesiewjk64.project.models.User;
 import com.jakesiewjk64.project.repositories.IUserRepository;
-import com.jakesiewjk64.project.utils.UserSpecification;
+import com.jakesiewjk64.project.specifications.UserSpecification;
 
 import lombok.RequiredArgsConstructor;
 

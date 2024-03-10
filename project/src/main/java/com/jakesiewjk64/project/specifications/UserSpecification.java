@@ -1,4 +1,4 @@
-package com.jakesiewjk64.project.utils;
+package com.jakesiewjk64.project.specifications;
 
 import org.springframework.data.jpa.domain.Specification;
 

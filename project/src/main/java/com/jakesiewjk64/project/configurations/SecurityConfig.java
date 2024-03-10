@@ -1,4 +1,4 @@
-package com.jakesiewjk64.project.adapters;
+package com.jakesiewjk64.project.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jakesiewjk64.project.models.AuthenticationRequest;
-import com.jakesiewjk64.project.models.AuthenticationResponse;
+import com.jakesiewjk64.project.dto.AuthRequestDto;
+import com.jakesiewjk64.project.dto.AuthResponseDto;
 import com.jakesiewjk64.project.models.User;
 import com.jakesiewjk64.project.services.UserService;
 import com.jakesiewjk64.project.utils.JwtUtil;
@@ -25,7 +25,7 @@ public class AuthenticationController {
   private final UserService userService;
 
   @GetMapping("/login")
-  public ResponseEntity<?> login(@RequestBody AuthenticationRequest request) {
+  public ResponseEntity<?> login(@RequestBody AuthRequestDto request) {
     Optional<User> user = userService.findUserByEmail(request.getEmail());
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -35,7 +35,7 @@ public class AuthenticationController {
         String token = JwtUtil.generateToken(request.getEmail());
 
         if (passwordMatch) {
-          return ResponseEntity.ok(new AuthenticationResponse(token, request.getEmail()));
+          return ResponseEntity.ok(new AuthResponseDto(token, request.getEmail()));
         }
       }
     } catch (BadCredentialsException e) {

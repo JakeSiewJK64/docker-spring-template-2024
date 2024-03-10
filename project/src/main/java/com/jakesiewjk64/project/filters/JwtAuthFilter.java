@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
+import com.jakesiewjk64.project.utils.JwtUtil;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -23,7 +25,13 @@ public class JwtAuthFilter extends GenericFilterBean {
     String header = httpServletRequest.getHeader("Authorization");
 
     if (header != null && header.startsWith("Bearer ")) {
-      filterChain.doFilter(servletRequest, servletResponse);
+
+      String token = header.replace("Bearer ", "");
+
+      if (JwtUtil.isTokenValid(token)) {
+        filterChain.doFilter(servletRequest, servletResponse);
+      }
+
       return;
     }
 

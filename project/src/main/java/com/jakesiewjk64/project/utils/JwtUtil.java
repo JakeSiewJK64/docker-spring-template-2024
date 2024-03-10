@@ -2,6 +2,7 @@ package com.jakesiewjk64.project.utils;
 
 import java.util.Date;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -18,12 +19,18 @@ public class JwtUtil {
         .compact();
   }
 
-  public static String extractEmail(String token) {
-    return Jwts
+  public static boolean isTokenValid(String token) {
+    Claims claim = Jwts
         .parser()
         .setSigningKey(SECRET)
         .parseClaimsJws(token)
-        .getBody()
-        .getSubject();
+        .getBody();
+    boolean jwtExpired = isTokenExpired(claim.getExpiration());
+
+    return !jwtExpired;
+  }
+
+  private static boolean isTokenExpired(Date tokenDate) {
+    return tokenDate.getTime() < System.currentTimeMillis();
   }
 }

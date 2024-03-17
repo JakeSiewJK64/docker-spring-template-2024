@@ -1,47 +1,32 @@
 package com.jakesiewjk64.project.controller;
 
-import java.util.Optional;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jakesiewjk64.project.dto.AuthRequestDto;
 import com.jakesiewjk64.project.dto.AuthResponseDto;
-import com.jakesiewjk64.project.models.User;
-import com.jakesiewjk64.project.services.UserService;
-import com.jakesiewjk64.project.utils.JwtUtil;
-
+import com.jakesiewjk64.project.dto.RegisterRequestDto;
+import com.jakesiewjk64.project.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-  private final UserService userService;
+  private final AuthenticationService authenticationService;
 
-  @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestBody AuthRequestDto request) {
-    Optional<User> user = userService.findUserByEmail(request.getEmail());
-    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+  @PostMapping("/register")
+  public ResponseEntity<AuthResponseDto> register(
+      @RequestBody RegisterRequestDto request) {
+    return ResponseEntity.ok(authenticationService.register(request));
+  }
 
-    try {
-      if (user.isPresent()) {
-        boolean passwordMatch = bCryptPasswordEncoder.matches(request.getPassword(), user.get().getPassword());
-        String token = JwtUtil.generateToken(request.getEmail());
-
-        if (passwordMatch) {
-          return ResponseEntity.ok(new AuthResponseDto(token, request.getEmail()));
-        }
-      }
-    } catch (BadCredentialsException e) {
-    } catch (Exception e) {
-    }
-
-    return new ResponseEntity<>("Incorrect email or password.", HttpStatus.BAD_REQUEST);
+  @PostMapping("/authenticate")
+  public ResponseEntity<AuthResponseDto> authenticate(@RequestBody AuthRequestDto request) {
+    return ResponseEntity.ok(authenticationService.authenticate(request));
   }
 }

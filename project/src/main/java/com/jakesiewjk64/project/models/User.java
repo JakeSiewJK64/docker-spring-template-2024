@@ -1,14 +1,28 @@
 package com.jakesiewjk64.project.models;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "staff")
-public class User {
+public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private String id;
@@ -17,71 +31,35 @@ public class User {
   private String position;
   private String contact_number;
   private String email;
-  private String username;
   private String password;
 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getFirst_name() {
-    return first_name;
-  }
-
-  public void setFirst_name(String first_name) {
-    this.first_name = first_name;
-  }
-
-  public String getLast_name() {
-    return last_name;
-  }
-
-  public void setLast_name(String last_name) {
-    this.last_name = last_name;
-  }
-
-  public String getPosition() {
-    return position;
-  }
-
-  public void setPosition(String position) {
-    this.position = position;
-  }
-
-  public String getContact_number() {
-    return contact_number;
-  }
-
-  public void setContact_number(String contact_number) {
-    this.contact_number = contact_number;
-  }
-
-  public String getEmail() {
+  @Override
+  public String getUsername() {
     return email;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return new ArrayList<>();
   }
 
-  public String getUsername() {
-    return username;
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
   }
 
-  public String getPassword() {
-    return password;
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
-
 }

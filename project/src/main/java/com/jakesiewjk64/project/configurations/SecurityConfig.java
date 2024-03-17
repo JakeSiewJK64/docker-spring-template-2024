@@ -29,11 +29,6 @@ public class SecurityConfig {
         .requestMatchers("/api/v1/auth/**").permitAll()
         .anyRequest()
         .authenticated());
-    // http.authorizeRequests() // Replaced .authorizeHttpRequests() with
-    // .authorizeRequests()
-    // .requestMatchers("/api/v1/auth/**").permitAll() // Updated to use antMatchers
-    // .anyRequest()
-    // .authenticated();
     http.sessionManagement(session -> session
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
     http.authenticationProvider(authenticationProvider)

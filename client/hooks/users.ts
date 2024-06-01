@@ -1,7 +1,8 @@
 import getAxiosInstance from "@/utils/axiosInstance";
 
 export async function useGetAllUsers() {
-  const res = await getAxiosInstance("/users").catch((err) => {
+  const axios = getAxiosInstance();
+  const res = await axios.get("/users").catch((err) => {
     return {
       data: null,
       statusText: "Error",

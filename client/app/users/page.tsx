@@ -1,18 +1,14 @@
-import React from "react";
+import { useGetAllUsers } from "@/hooks";
 
-const getUsers = async () => {
-  const res = await fetch("http://localhost:8080/users");
-  const data = await res.json();
-  return data;
-};
+export default async function Page() {
+  const { data: users, status } = await useGetAllUsers();
 
-const page = async () => {
-  const users: PaginatedResponse<User> = await getUsers();
+  console.log(status);
 
   if (users) {
     return (
       <>
-        {users.content.map((user) => (
+        {users.content.map((user: User) => (
           <div key={user.id}>
             <p>{user.first_name}</p>
           </div>
@@ -22,6 +18,4 @@ const page = async () => {
   }
 
   return null;
-};
-
-export default page;
+}

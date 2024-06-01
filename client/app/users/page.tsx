@@ -1,9 +1,11 @@
 import { useGetAllUsers } from "@/hooks";
 
 export default async function Page() {
-  const { data: users, status } = await useGetAllUsers();
+  const { data: users } = await useGetAllUsers();
 
-  console.log(status);
+  if (!users) {
+    return "No Users at the moment...";
+  }
 
   if (users) {
     return (

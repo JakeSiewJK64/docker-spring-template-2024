@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -27,11 +29,15 @@ public class JwtService {
   }
 
   private Claims extractAllClaims(String token) {
-    return Jwts
-        .parser()
-        .setSigningKey(SECRET)
-        .parseClaimsJws(token)
-        .getBody();
+    try {
+      return Jwts
+          .parser()
+          .setSigningKey(SECRET)
+          .parseClaimsJws(token)
+          .getBody();
+    } catch (ExpiredJwtException e) {
+      throw new JwtException("Token has expired");
+    }
   }
 
   public String generateToken(UserDetails userDetails) {

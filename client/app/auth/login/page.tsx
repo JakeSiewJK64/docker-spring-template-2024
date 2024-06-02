@@ -14,12 +14,18 @@ import { Input } from "@/components/ui/input";
 import { loginFormAction } from "@/actions/auth";
 import { loginFormSchema, useLoginForm } from "@/hooks/form/useLoginForm";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const form = useLoginForm();
+  const router = useRouter();
 
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    loginFormAction(values);
+    const res = await loginFormAction(values);
+
+    if (res === 200) {
+      router.push("/dashboard");
+    }
   }
 
   return (

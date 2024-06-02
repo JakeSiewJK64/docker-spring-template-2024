@@ -14,5 +14,5 @@ export const loginFormAction = async (
 
   setCookie({ key: "token", value: data.token });
 
-  return null;
+  return res.status;
 };

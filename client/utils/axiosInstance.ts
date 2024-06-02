@@ -7,7 +7,7 @@ export default function getAxiosInstance() {
   return axios.create({
     baseURL: "http://localhost:8080/api/v1",
     headers: {
-      Authorization: `Bearer ${bearerToken?.value}`,
+      ...(bearerToken && { Authorization: `Bearer ${bearerToken?.value}` }),
     },
   });
 }

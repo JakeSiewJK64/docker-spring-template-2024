@@ -17,7 +17,7 @@ CREATE TABLE public.staff (
 	last_name varchar(50) NULL,
 	"position" varchar(50) NULL,
 	contact_number varchar(15) NULL,
-	email varchar(100) NULL,
+	email varchar(100) NULL UNIQUE,
 	"password" varchar(255) NOT NULL,
 	"role" int4 NULL,
 	CONSTRAINT staff_pkey PRIMARY KEY (id),

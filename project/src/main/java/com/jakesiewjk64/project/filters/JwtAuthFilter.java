@@ -1,6 +1,7 @@
 package com.jakesiewjk64.project.filters;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +27,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
   private final JwtService jwtService;
   private final UserDetailsService userDetailsService;
   private final IAuthenticationFacade authenticationFacade;
+  private static final String[] WHITE_LIST_URL = {
+      "/api/v1/auth"
+  };
 
   @Override
   protected void doFilterInternal(
@@ -36,9 +40,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     final String authHeader = request.getHeader("Authorization");
     final String jwt;
     final String email;
-    final String requestPath = request.getRequestURI();
+    final String requestPath = request.getServletPath();
 
-    if (authHeader == null || !authHeader.startsWith("Bearer ") || requestPath.contains("/api/v1/auth")) {
+    if (authHeader == null || !authHeader.startsWith("Bearer ")
+        || Arrays.stream(WHITE_LIST_URL).anyMatch(requestPath::contains)) {
       filterChain.doFilter(request, response);
       return;
     }

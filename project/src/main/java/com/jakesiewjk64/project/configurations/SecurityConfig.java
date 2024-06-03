@@ -19,6 +19,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+  private static final String[] WHITE_LIST_URL = {
+      "/api/v1/auth/**",
+      "/v2/api-docs",
+      "/v3/api-docs",
+      "/v3/api-docs/**",
+      "/swagger-resources",
+      "/swagger-resources/**",
+      "/configuration/ui",
+      "/configuration/security",
+      "/swagger-ui/**",
+      "/webjars/**",
+      "/swagger-ui.html" };
   private final JwtAuthFilter jwtAuthFilter;
   private final AuthenticationProvider authenticationProvider;
 
@@ -26,7 +38,7 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable);
     http.authorizeHttpRequests(auth -> auth
-        .requestMatchers("/api/v1/auth/**").permitAll()
+        .requestMatchers(WHITE_LIST_URL).permitAll()
         .anyRequest()
         .authenticated());
     http.sessionManagement(session -> session

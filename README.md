@@ -8,3 +8,6 @@ When you run docker-compose up --build, it rebuilds the image. However, if Docke
 sudo docker-compose build --no-cache
 sudo docker-compose up
 ```
+
+# SWAGGER API DOCS
+located at `http://localhost:8080/swagger-ui/index.html`. 

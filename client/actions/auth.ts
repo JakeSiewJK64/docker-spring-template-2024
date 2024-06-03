@@ -16,3 +16,15 @@ export const loginFormAction = async (
 
   return res.status;
 };
+
+export const getIsTokenExpired = async (token?: string) => {
+  if (token) {
+    const axios = getAxiosInstance();
+    const res = await axios
+      .post("/auth/verify", { token: token })
+      .then((res) => res.data);
+    return res;
+  }
+
+  return false;
+};

@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCookie } from "./utils/cookiesUtils";
+import { getIsTokenExpired } from "./actions/auth";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const authToken = getCookie("token");
+  const tokenExpired = await getIsTokenExpired(authToken?.value);
+  const authenticated = authToken && !tokenExpired;
 
   if (path === "/auth/login") {
-    if (authToken) {
+    if (authenticated) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
   } else {
-    if (!authToken) {
+    if (!authenticated) {
       return NextResponse.redirect(new URL("/auth/login", request.url));
     }
   }
@@ -19,5 +22,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/auth/login"],
+  matcher: ["/dashboard", "/users", "/auth/login"],
 };

@@ -3,9 +3,10 @@ import { getCookie } from "./cookiesUtils";
 
 export default function getAxiosInstance() {
   const bearerToken = getCookie("token");
+  const baseURL = process.env["API_URL"];
 
   return axios.create({
-    baseURL: "http://localhost:8080/api/v1",
+    baseURL: `${baseURL}/api/v1`,
     headers: {
       ...(bearerToken && { Authorization: `Bearer ${bearerToken?.value}` }),
     },

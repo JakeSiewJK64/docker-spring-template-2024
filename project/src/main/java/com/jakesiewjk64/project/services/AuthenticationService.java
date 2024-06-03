@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.jakesiewjk64.project.dto.AuthRequestDto;
 import com.jakesiewjk64.project.dto.AuthResponseDto;
 import com.jakesiewjk64.project.dto.RegisterRequestDto;
+import com.jakesiewjk64.project.dto.VerifyRequestDto;
 import com.jakesiewjk64.project.models.User;
 import com.jakesiewjk64.project.repositories.IUserRepository;
 
@@ -51,5 +52,9 @@ public class AuthenticationService {
         .email(user.getEmail())
         .token(jwtToken)
         .build();
+  }
+
+  public boolean verifyToken(VerifyRequestDto request) {
+    return jwtService.isTokenExpired(request.getToken());
   }
 }

@@ -66,6 +66,17 @@ const LoginForm = () => {
         >
           Login
         </Button>
+        <div className="mx-auto">
+          <Button
+            type="button"
+            onClick={() => {
+              router.push("/auth/register");
+            }}
+            variant="link"
+          >
+            New user? Register here
+          </Button>
+        </div>
       </div>
     </form>
   );

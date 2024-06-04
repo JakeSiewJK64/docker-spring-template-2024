@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   const tokenExpired = await getIsTokenExpired(authToken?.value);
   const authenticated = authToken && !tokenExpired;
 
-  if (path === "/auth/login") {
+  if (path.startsWith("/auth/")) {
     if (authenticated) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
@@ -22,5 +22,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/users", "/auth/login"],
+  matcher: ["/dashboard", "/users", "/auth/:path*"],
 };

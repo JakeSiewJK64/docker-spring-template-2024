@@ -1,10 +1,14 @@
 "use server";
 
 import getAxiosInstance from "@/utils/axiosInstance";
-import { setCookie } from "@/utils/cookiesUtils";
+import { setCookie, removeCookie } from "@/utils/cookiesUtils";
 import { loginFormSchema } from "../hooks/form/useLoginForm";
 import { z } from "zod";
 import { registerFormSchema } from "@/hooks/form/useRegisterForm";
+
+export const logoutAction = async () => {
+  removeCookie("token");
+};
 
 export const loginFormAction = async (
   loginValues: z.infer<typeof loginFormSchema>

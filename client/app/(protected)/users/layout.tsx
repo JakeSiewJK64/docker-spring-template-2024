@@ -10,10 +10,10 @@ const layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <>
+    <div className="m-3">
       <div>users layout</div>
       {children}
-    </>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -12,11 +12,7 @@ const LogoutButton = () => {
     });
   };
 
-  return (
-    <Button onClick={logout} className="ml-auto">
-      Logout
-    </Button>
-  );
+  return <Button onClick={logout}>Logout</Button>;
 };
 
 export default LogoutButton;

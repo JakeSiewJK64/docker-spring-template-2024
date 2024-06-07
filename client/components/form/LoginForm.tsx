@@ -24,6 +24,10 @@ export const LoginForm = () => {
 
     if (res === 200) {
       router.push("/dashboard");
+    } else {
+      form.setError("password", {
+        message: "Either email or password is incorrect.",
+      });
     }
   }
 

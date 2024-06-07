@@ -14,12 +14,16 @@ export const loginFormAction = async (
   loginValues: z.infer<typeof loginFormSchema>
 ) => {
   const axios = getAxiosInstance();
-  const res = await axios.post("/auth/authenticate", loginValues);
-  const data: { token: string; email: string } = res.data;
+  try {
+    const res = await axios.post("/auth/authenticate", loginValues);
+    const data: { token: string; email: string } = res.data;
 
-  setCookie({ key: "token", value: data.token });
+    setCookie({ key: "token", value: data.token });
 
-  return res.status;
+    return res.status;
+  } catch (error) {
+    return 400;
+  }
 };
 
 export const registerFormAction = async (

@@ -1,3 +1,5 @@
+"use server";
+
 import { getIsTokenExpired } from "@/actions/auth";
 import { getCookie } from "@/utils/cookiesUtils";
 import { redirect } from "next/navigation";

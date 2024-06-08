@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { getCookie } from "./utils/cookiesUtils";
 import { getIsTokenExpired } from "./actions/auth";
 
-const DEFAULT_LOGIN_REDIRECT = "/dashboard";
 const publicRoutes = ["/"];
 const authRoutes = ["/auth/login", "/auth/register"];
 
@@ -18,10 +17,6 @@ export async function middleware(request: NextRequest) {
   const isAuthRoute = authRoutes.includes(path);
 
   if (isAuthRoute) {
-    if (authenticated) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-    }
-
     return null;
   }
 
